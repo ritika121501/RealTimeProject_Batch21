@@ -1,11 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using RealTimeProject_Batch21.DAL;
+using RealTimeProject_Batch21.DAL.Interfaces;
+using RealTimeProject_Batch21.DAL.Repos;
+using RealTimeProject_Batch21.Services;
+using RealTimeProject_Batch21.Services.ServiceImplementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDbContext>(item => item.UseSqlServer(builder.Configuration.GetConnectionString("Batch21")));
+builder.Services.AddDbContext<ApplicationDbContext>(item => item.UseSqlServer(builder.Configuration.GetConnectionString("Batch21RealTime")));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICategoryRespository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
