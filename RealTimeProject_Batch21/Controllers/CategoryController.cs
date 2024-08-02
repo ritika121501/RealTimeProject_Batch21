@@ -30,8 +30,17 @@ namespace RealTimeProject_Batch21.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCategory(Category category)
         {
-            var emp = await _categoryService.CreateCategory(category);
-            return RedirectToAction("GetAllCategories");
+            try
+            {
+                var emp = await _categoryService.CreateCategory(category);
+                TempData["Success"] = "Category Added Successfully";
+                return RedirectToAction("GetAllCategories");
+            }
+           catch(Exception ex)
+            {
+                TempData["error"] = "Duplicate Category Is Not Allowed";
+                return RedirectToAction("GetAllCategories");
+            }
         }
 
         [HttpGet]
