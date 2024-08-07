@@ -15,10 +15,42 @@ namespace RealTimeProject_Batch21.Controllers
 
         //asynchrous operations -- performance tuning Task, async and await
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAllCategoriesOld()
         {
             var listOfCategorys = await _categoryService.GetAllCategory();
             return View(listOfCategorys);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetCategoriesList()
+        {
+            JqueryDataTableParam param = new JqueryDataTableParam();
+            //param.Search = "thIS";
+            param.SortColumn = "Description";
+            param.SortOrder = "asc";
+            var categories = await _categoryService.GetAllCategory();
+            if (!string.IsNullOrEmpty(param.Search))
+            {
+                var listOfCategory = categories.Where(x=>x.Name.ToLower().Contains(param.Search.ToLower())
+                || x.Description.ToLower().Contains(param.Search.ToLower())).ToList();
+            }
+
+            if(!string.IsNullOrEmpty(param.SortColumn))
+            {
+                if(param.SortColumn == "Name")
+                {
+                    var sortedList = param.SortOrder == "asc" ? categories.OrderBy(x => x.Name).ToList() : categories.OrderByDescending(x => x.Name).ToList();
+                }
+                else if(param.SortColumn == "Description")
+                {
+                    var sortedList = param.SortOrder == "asc" ? categories.OrderBy(x => x.Description).ToList() : categories.OrderByDescending(x => x.Description).ToList();
+                }
+            }
+            
+
+            return null;
+            //var sortColumn
+
         }
 
         [HttpGet]
