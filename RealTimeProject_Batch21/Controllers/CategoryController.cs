@@ -18,39 +18,26 @@ namespace RealTimeProject_Batch21.Controllers
         public async Task<IActionResult> GetAllCategoriesOld()
         {
             var listOfCategorys = await _categoryService.GetAllCategory();
-            return View(listOfCategorys);
+            return Ok(listOfCategorys);
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<JsonResult> GetCategoriesList()
         {
-            JqueryDataTableParam param = new JqueryDataTableParam();
-            //param.Search = "thIS";
-            param.SortColumn = "Description";
-            param.SortOrder = "asc";
-            var categories = await _categoryService.GetAllCategory();
-            if (!string.IsNullOrEmpty(param.Search))
+            //Exception Handling
+            try
             {
-                var listOfCategory = categories.Where(x=>x.Name.ToLower().Contains(param.Search.ToLower())
-                || x.Description.ToLower().Contains(param.Search.ToLower())).ToList();
+                var draw = Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();
+                var length = Request.Form["length"].FirstOrDefault();
+                //var sortColumn = Request.Form["sort"].FirstOrDefault();
+                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip  = start != null? Convert.ToInt32(start) : 0;
+                int totalRecord = 0;
             }
-
-            if(!string.IsNullOrEmpty(param.SortColumn))
-            {
-                if(param.SortColumn == "Name")
-                {
-                    var sortedList = param.SortOrder == "asc" ? categories.OrderBy(x => x.Name).ToList() : categories.OrderByDescending(x => x.Name).ToList();
-                }
-                else if(param.SortColumn == "Description")
-                {
-                    var sortedList = param.SortOrder == "asc" ? categories.OrderBy(x => x.Description).ToList() : categories.OrderByDescending(x => x.Description).ToList();
-                }
-            }
-            
-
+            catch(Exception ex) { }
             return null;
-            //var sortColumn
-
         }
 
         [HttpGet]

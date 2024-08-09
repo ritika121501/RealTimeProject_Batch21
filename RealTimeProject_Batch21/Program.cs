@@ -29,6 +29,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+//app.UseExceptionHandler(); -- this is a middleware that will help in handling
+//exception that has been raised anywhere in the application
+
+//app.UseExceptionHandler();
 
 app.MapControllerRoute(
     name: "default",
