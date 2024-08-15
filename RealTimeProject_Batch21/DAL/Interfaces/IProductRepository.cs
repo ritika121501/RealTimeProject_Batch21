@@ -2,7 +2,7 @@
 
 namespace RealTimeProject_Batch21.DAL.Interfaces
 {
-    public interface ICategoryRespository : IGenericRepository<Category>
+    public interface IProductRepository : IGenericRepository<Product>
     {
     }
 }

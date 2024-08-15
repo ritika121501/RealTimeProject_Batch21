@@ -15,29 +15,10 @@ namespace RealTimeProject_Batch21.Controllers
 
         //asynchrous operations -- performance tuning Task, async and await
         [HttpGet]
-        public async Task<IActionResult> GetAllCategoriesOld()
+        public async Task<IActionResult> GetAllCategories()
         {
             var listOfCategorys = await _categoryService.GetAllCategory();
-            return Ok(listOfCategorys);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> GetCategoriesList()
-        {
-            //Exception Handling
-            try
-            {
-                var draw = Request.Form["draw"].FirstOrDefault();
-                var start = Request.Form["start"].FirstOrDefault();
-                var length = Request.Form["length"].FirstOrDefault();
-                //var sortColumn = Request.Form["sort"].FirstOrDefault();
-                var searchValue = Request.Form["search[value]"].FirstOrDefault();
-                int pageSize = length != null ? Convert.ToInt32(length) : 0;
-                int skip  = start != null? Convert.ToInt32(start) : 0;
-                int totalRecord = 0;
-            }
-            catch(Exception ex) { }
-            return null;
+            return View(listOfCategorys);
         }
 
         [HttpGet]
@@ -105,9 +86,18 @@ namespace RealTimeProject_Batch21.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-
-
             return RedirectToAction("GetAllCategorys");
         }
+
+        #region
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var _categories = await _categoryService.GetAllCategory();
+            return Json(new { data = _categories });
+        }
+        
+        #endregion
     }
 }

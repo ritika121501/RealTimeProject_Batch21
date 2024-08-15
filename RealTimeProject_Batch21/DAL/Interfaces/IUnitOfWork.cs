@@ -2,7 +2,8 @@
 {
     public interface IUnitOfWork : IDisposable
     {
-        ICategoryRespository CategoryRepository { get; }
+        ICategoryRepository CategoryRepository { get; }
+        IProductRepository ProductRepository { get; }
         int Save();
     }
 }

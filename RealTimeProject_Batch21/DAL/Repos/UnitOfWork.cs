@@ -5,12 +5,14 @@ namespace RealTimeProject_Batch21.DAL.Repos
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        public ICategoryRespository CategoryRepository { get; }
+        public ICategoryRepository CategoryRepository { get; }
+        public IProductRepository ProductRepository { get; }
 
-        public UnitOfWork(ApplicationDbContext context, ICategoryRespository categoryRepository)
+        public UnitOfWork(ApplicationDbContext context, ICategoryRepository categoryRepository, IProductRepository productRepository)
         {
             _context = context;
             CategoryRepository = categoryRepository;
+            ProductRepository = productRepository;
         }
         public int Save()
         {

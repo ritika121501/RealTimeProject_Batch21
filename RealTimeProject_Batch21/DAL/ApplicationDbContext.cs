@@ -9,5 +9,6 @@ namespace RealTimeProject_Batch21.DAL
         { }
 
         public DbSet<Category> Category { get; set; }
+        public DbSet<Product> Product { get; set; }
     }
 }

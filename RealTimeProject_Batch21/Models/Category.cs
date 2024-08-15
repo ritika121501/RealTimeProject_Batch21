@@ -16,5 +16,6 @@ namespace RealTimeProject_Batch21.Models
 
         [MaxLength(2000)]
         public string Description { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }
