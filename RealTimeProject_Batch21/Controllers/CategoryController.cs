@@ -15,9 +15,9 @@ namespace RealTimeProject_Batch21.Controllers
 
         //asynchrous operations -- performance tuning Task, async and await
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public IActionResult GetAllCategories()
         {
-            var listOfCategorys = await _categoryService.GetAllCategory();
+            var listOfCategorys =  _categoryService.GetAllCategory();
             return View(listOfCategorys);
         }
 
@@ -92,9 +92,9 @@ namespace RealTimeProject_Batch21.Controllers
         #region
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll()
         {
-            var _categories = await _categoryService.GetAllCategory();
+            var _categories =  _categoryService.GetAllCategory();
             return Json(new { data = _categories });
         }
         

@@ -45,9 +45,9 @@ namespace RealTimeProject_Batch21.Services.ServiceImplementation
             return false;
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategory()
+        public  IEnumerable<Category> GetAllCategory()
         {
-            var empDetailsList = await _unitOfWork.CategoryRepository.GetAll();
+            var empDetailsList =  _unitOfWork.CategoryRepository.GetAll();
             return empDetailsList;
         }
 

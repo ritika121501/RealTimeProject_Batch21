@@ -20,6 +20,7 @@ namespace RealTimeProject_Batch21.Models
         [Required]
         public float Price { get;set; }
         public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
         public Category Category { get; set; }
     }
 }

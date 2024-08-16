@@ -20,9 +20,9 @@ namespace RealTimeProject_Batch21.DAL.Repos
             _context.Set<T>().Remove(entity);
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public IEnumerable<T> GetAll()
         {
-            return await _context.Set<T>().ToListAsync();
+            return  _context.Set<T>().ToList();
         }
 
         public async Task<T> GetById(int id)

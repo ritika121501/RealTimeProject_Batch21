@@ -1,29 +1,40 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RealTimeProject_Batch21.Models;
 using RealTimeProject_Batch21.Services;
-
+using System.Linq;
+using System.Collections;
 namespace RealTimeProject_Batch21.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService;
+            _categoryService = categoryService;
         }
 
         //asynchrous operations -- performance tuning Task, async and await
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            var listOfProducts = await _productService.GetAllProduct();
+            var listOfProducts =  _productService.GetAllProduct();
             return View(listOfProducts);
         }
 
         [HttpGet]
         public async Task<IActionResult> AddProduct()
         {
+            IEnumerable<SelectListItem> categoryNames =  _categoryService.GetAllCategory()
+            .Select(u=> new SelectListItem
+            {
+                Text=u.Name,
+                Value=u.CategoryId.ToString(),
+            });
+            ViewData["CategoryNames"] = categoryNames;
             return View();
         }
 
@@ -92,9 +103,9 @@ namespace RealTimeProject_Batch21.Controllers
         #region
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll()
         {
-            var _categories = await _productService.GetAllProduct();
+            var _categories = _productService.GetAllProduct();
             return Json(new { data = _categories });
         }
         
