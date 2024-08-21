@@ -10,11 +10,13 @@ namespace RealTimeProject_Batch21.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(IProductService productService, ICategoryService categoryService)
+        public ProductController(IProductService productService, ICategoryService categoryService, IWebHostEnvironment webHostEnvironment)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         //asynchrous operations -- performance tuning Task, async and await
@@ -39,10 +41,23 @@ namespace RealTimeProject_Batch21.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct(Product product)
+        public async Task<IActionResult> AddProduct(Product product,IFormFile? file)
         {
             try
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if(file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString()+Path.GetExtension(file.FileName);
+                    string productFolderPath = Path.Combine(wwwRootPath, @"images\product");
+
+                    using (var fileStream = new FileStream(Path.Combine(productFolderPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    product.ImageUrl = @"images\product\" + fileName;
+                }
+
                 var emp = await _productService.CreateProduct(product);
                 TempData["Success"] = "Product Added Successfully";
                 return RedirectToAction("GetAllProducts");
