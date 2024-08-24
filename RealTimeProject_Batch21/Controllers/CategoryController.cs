@@ -94,7 +94,7 @@ namespace RealTimeProject_Batch21.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var _categories =  _categoryService.GetAllCategory();
+            var _categories =  _categoryService.GetAllCategory().ToList();
             return Json(new { data = _categories });
         }
         

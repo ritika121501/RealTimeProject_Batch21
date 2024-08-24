@@ -10,6 +10,8 @@ namespace RealTimeProject_Batch21.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
         [Required]
+        [MaxLength(100)]
+        [MinLength(10)]
         public string Title {  get; set; }
         [Required]
         public string Description { get; set; }

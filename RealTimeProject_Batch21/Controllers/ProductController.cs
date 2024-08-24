@@ -45,21 +45,32 @@ namespace RealTimeProject_Batch21.Controllers
         {
             try
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if(file != null)
+                ModelState.Remove("Category");
+                if (product.ImageUrl == null) 
                 {
-                    string fileName = Guid.NewGuid().ToString()+Path.GetExtension(file.FileName);
-                    string productFolderPath = Path.Combine(wwwRootPath, @"images\product");
-
-                    using (var fileStream = new FileStream(Path.Combine(productFolderPath, fileName), FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
-                    product.ImageUrl = @"images\product\" + fileName;
+                    ModelState.AddModelError("ImageUrl", "Image Url is required");
+                    return View(product);
                 }
+                
+                if(ModelState.IsValid)
+                {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    if (file != null)
+                    {
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                        string productFolderPath = Path.Combine(wwwRootPath, @"images\product");
 
-                var emp = await _productService.CreateProduct(product);
-                TempData["Success"] = "Product Added Successfully";
+                        using (var fileStream = new FileStream(Path.Combine(productFolderPath, fileName), FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+                        product.ImageUrl = @"images\product\" + fileName;
+                    }
+
+                    var emp = await _productService.CreateProduct(product);
+                    TempData["Success"] = "Product Added Successfully";
+                }
+               
                 return RedirectToAction("GetAllProducts");
             }
            catch(Exception ex)
