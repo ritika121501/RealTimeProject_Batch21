@@ -1,4 +1,5 @@
 ﻿using RealTimeProject_Batch21.DAL.Interfaces;
+using RealTimeProject_Batch21.DTO;
 using RealTimeProject_Batch21.Models;
 
 namespace RealTimeProject_Batch21.Services.ServiceImplementation
@@ -45,9 +46,9 @@ namespace RealTimeProject_Batch21.Services.ServiceImplementation
             return false;
         }
 
-        public IEnumerable<Product> GetAllProduct()
+        public IEnumerable<ProductViewModel> GetAllProduct()
         {
-            var empDetailsList =  _unitOfWork.ProductRepository.GetAll();
+            var empDetailsList =  _unitOfWork.ProductRepository.GetAllProductsWithCategory();
             return empDetailsList;
         }
 

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Product>
+﻿@using RealTimeProject_Batch21.DTO
+@model List<ProductViewModel>
 
-<partial name="_Notification" />
-<div class="card shadow border-0 mt-4">
+<div class="card shadow border-0 my-4">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
@@ -20,46 +20,22 @@
             </div>
         </div>
 
-        <table class="table table-bordered table-striped" id="categoryTable">
+        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
             <thead>
                 <tr>
-                    <th>
-                        Product Name
-                    </th>
-                    <th>
-                        Description
-                    </th>
-                    <th>
-                        ISBN
-                    </th>
-                    <th>
-                        Author
-                    </th>
-                    <th>
-                        Price
-                    </th>
+                    <th>Title</th>
+                    <th>ISBN</th>
+                    <th>Price</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th></th>
                 </tr>
             </thead>
         </table>
+
     </div>
 </div>
 
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        debugger;
-        alert('heko');
-        $("#categoryTable").DataTable({
-            "ajax": {
-                "url": "Product/GetAll",
-                "type": "GET",
-                "datatype": "json"
-            },
-            "columns": [
-                { "data": "categoryId", "name": "Id", "autowidth": true },
-                { "data": "name", "name": "Name", "autowidth": true },
-                { "data": "description", "name": "Description", "autowidth": true }
-            ]
-        });
-    });
-</script>
+@section Scripts{
+    <script src="~/js/product.js"></script>
+}

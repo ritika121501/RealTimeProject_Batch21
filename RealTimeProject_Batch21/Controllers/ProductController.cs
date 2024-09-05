@@ -131,8 +131,8 @@ namespace RealTimeProject_Batch21.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var _categories = _productService.GetAllProduct();
-            return Json(new { data = _categories });
+            var _products = _productService.GetAllProduct();
+            return Json(new { data = _products });
         }
         
         #endregion
