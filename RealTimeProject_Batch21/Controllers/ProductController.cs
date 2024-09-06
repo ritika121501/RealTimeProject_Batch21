@@ -10,12 +10,14 @@ namespace RealTimeProject_Batch21.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
+        private readonly IProductImagesService _productImagesService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(IProductService productService, ICategoryService categoryService, IWebHostEnvironment webHostEnvironment)
+        public ProductController(IProductService productService, ICategoryService categoryService, IProductImagesService productImagesService, IWebHostEnvironment webHostEnvironment)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _productImagesService = productImagesService;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -41,36 +43,39 @@ namespace RealTimeProject_Batch21.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct(Product product,IFormFile? file)
+        public async Task<IActionResult> AddProduct(Product product,IEnumerable<IFormFile>? MultipleFiles)
         {
             try
             {
+                List<ProductImages> images = new List<ProductImages>();
                 ModelState.Remove("Category");
-                if (product.ImageUrl == null) 
-                {
-                    ModelState.AddModelError("ImageUrl", "Image Url is required");
-                    return View(product);
-                }
                 
-                if(ModelState.IsValid)
+
+                if (ModelState.IsValid)
                 {
                     string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    if (file != null)
+                    if (MultipleFiles != null)
                     {
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                        string productFolderPath = Path.Combine(wwwRootPath, @"images\product");
-
-                        using (var fileStream = new FileStream(Path.Combine(productFolderPath, fileName), FileMode.Create))
+                        foreach (var file in MultipleFiles)
                         {
-                            file.CopyTo(fileStream);
-                        }
-                        product.ImageUrl = @"images\product\" + fileName;
-                    }
+                            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                            string productFolderPath = Path.Combine(wwwRootPath, @"images\product");
 
+                            using (var fileStream = new FileStream(Path.Combine(productFolderPath, fileName), FileMode.Create))
+                            {
+                                file.CopyTo(fileStream);
+                            }
+                            var pImage = new ProductImages();
+                            pImage.ImageUrl = @"images\product\" + fileName;
+                            images.Add(pImage);
+                        }
+                    }
+                    product.ProductImages = images;
+                    product.ImageUrl = "test";
                     var emp = await _productService.CreateProduct(product);
                     TempData["Success"] = "Product Added Successfully";
                 }
-               
+
                 return RedirectToAction("GetAllProducts");
             }
            catch(Exception ex)

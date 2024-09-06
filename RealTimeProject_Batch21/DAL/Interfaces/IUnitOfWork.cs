@@ -4,6 +4,7 @@
     {
         ICategoryRepository CategoryRepository { get; }
         IProductRepository ProductRepository { get; }
+        IProductImageRepository ProductImageRepository { get; }
         int Save();
     }
 }
