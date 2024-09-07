@@ -56,7 +56,7 @@ namespace RealTimeProject_Batch21.Services.ServiceImplementation
         {
             if (productId > 0)
             {
-                var empDetails = await _unitOfWork.ProductRepository.GetById(productId);
+                var empDetails = await _unitOfWork.ProductRepository.GetProductDetailsWithProductImages(productId);
                 if (empDetails != null)
                 {
                     return empDetails;

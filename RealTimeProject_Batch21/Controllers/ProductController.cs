@@ -85,6 +85,7 @@ namespace RealTimeProject_Batch21.Controllers
             }
         }
 
+        //Lazy loading
         [HttpGet]
         public async Task<IActionResult> EditProduct(int id)
         {
@@ -128,6 +129,7 @@ namespace RealTimeProject_Batch21.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
+            var listOfProducts = _productService.DeleteProduct(id);
             return RedirectToAction("GetAllProducts");
         }
 

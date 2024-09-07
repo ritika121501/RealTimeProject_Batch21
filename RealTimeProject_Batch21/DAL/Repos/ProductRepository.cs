@@ -34,5 +34,14 @@ namespace RealTimeProject_Batch21.DAL.Repos
                       });
             return query.ToList();
         }
+
+        //First and firstOrDefault
+        public async Task<Product> GetProductDetailsWithProductImages(int productId)
+        {
+            var query = await _context.Product.Include(x=>x.ProductImages)
+                       .FirstOrDefaultAsync(x => x.ProductId == productId);
+
+            return query;
+        }
     }
 }
