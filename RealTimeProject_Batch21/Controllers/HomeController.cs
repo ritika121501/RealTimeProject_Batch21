@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using RealTimeProject_Batch21.DTO;
 using RealTimeProject_Batch21.Models;
+using RealTimeProject_Batch21.Services;
 using System.Diagnostics;
 
 namespace RealTimeProject_Batch21.Controllers
@@ -7,15 +9,34 @@ namespace RealTimeProject_Batch21.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductService _productService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProductService productService)
         {
             _logger = logger;
+            _productService = productService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<ProductViewModel> productList = _productService.GetAllProduct().ToList();
+            return View(productList);
+        }
+
+        //To vist again with entity framework
+        public IActionResult Details(int productId) {
+            ShoppingCart cart = new ShoppingCart();
+            cart.Product = new Product();
+            cart.Product.ISBN = "1234";
+            cart.Product.Author = "Ritika";
+            
+            cart.Product.Description = "I am doing testing";
+            cart.Product.Price = 24.00F;
+            cart.Product.Title = "Test Book";
+            cart.Count = 1;
+            cart.ProductId = 1004;
+
+            return View(cart);
         }
 
         public IActionResult Privacy()

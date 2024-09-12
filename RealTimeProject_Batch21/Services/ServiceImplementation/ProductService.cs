@@ -30,11 +30,11 @@ namespace RealTimeProject_Batch21.Services.ServiceImplementation
         {
             if (productId > 0)
             {
-                var empDetails = await _unitOfWork.ProductRepository.GetById(productId);
+               var prodDetails = await _unitOfWork.ProductRepository.GetProductDetailsWithProductImages(productId);
 
-                if (empDetails != null)
+                if (prodDetails != null)
                 {
-                    _unitOfWork.ProductRepository.delete(empDetails);
+                    _unitOfWork.ProductRepository.delete(prodDetails);
                     var result = _unitOfWork.Save();
                     if (result > 0)
                     {

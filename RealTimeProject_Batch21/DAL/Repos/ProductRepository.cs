@@ -43,5 +43,19 @@ namespace RealTimeProject_Batch21.DAL.Repos
 
             return query;
         }
+
+        //This is important not part of real time project but a concept of
+        //entity framework
+        public async Task<List<Product>> GetAllProductWithFilters(int productId)
+        {
+            var query = await _context.Product
+                .Include(x => x.ProductImages.Where(p => p.ProductImagesId > 4))
+                .Include(x=>x.Category)
+                .Where(x => x.ProductId == productId)
+                .OrderByDescending(x => x.Title)
+                .Take(1).ToListAsync();
+
+            return query;
+        }
     }
 }

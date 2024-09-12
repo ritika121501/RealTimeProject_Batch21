@@ -22,5 +22,6 @@ namespace RealTimeProject_Batch21.DTO
         public float Price { get; set; }
 
         public string CategoryName { get; set; }
+        public List<ProductImages> ProductImages { get; set; }
     }
 }

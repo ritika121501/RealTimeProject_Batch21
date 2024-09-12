@@ -133,6 +133,12 @@ namespace RealTimeProject_Batch21.Controllers
             return RedirectToAction("GetAllProducts");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DeleteProductImages(int imageId)
+        { 
+            var isDeleted = _productImagesService.DeleteProductImages(imageId);
+            return RedirectToAction("GetAllProducts");
+        }
         #region
 
         [HttpGet]
@@ -145,3 +151,4 @@ namespace RealTimeProject_Batch21.Controllers
         #endregion
     }
 }
+

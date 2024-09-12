@@ -13,5 +13,6 @@ namespace RealTimeProject_Batch21.Models
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
+
     }
 }
