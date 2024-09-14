@@ -4,12 +4,15 @@ using RealTimeProject_Batch21.DAL.Interfaces;
 using RealTimeProject_Batch21.DAL.Repos;
 using RealTimeProject_Batch21.Services;
 using RealTimeProject_Batch21.Services.ServiceImplementation;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(item => item.UseSqlServer(builder.Configuration.GetConnectionString("Batch21RealTime")));
+
+builder.Services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -35,6 +38,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.MapRazorPages();
 //app.UseExceptionHandler(); -- this is a middleware that will help in handling
 //exception that has been raised anywhere in the application
 
