@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RealTimeProject_Batch21.Models;
 using RealTimeProject_Batch21.Services;
+using RealTimeProject_Batch21.Utilities;
 
 namespace RealTimeProject_Batch21.Controllers
 {
+    [Authorize(RBAC.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;

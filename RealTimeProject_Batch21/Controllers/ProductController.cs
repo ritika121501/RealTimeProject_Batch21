@@ -4,8 +4,11 @@ using RealTimeProject_Batch21.Models;
 using RealTimeProject_Batch21.Services;
 using System.Linq;
 using System.Collections;
+using Microsoft.AspNetCore.Authorization;
+using RealTimeProject_Batch21.Utilities;
 namespace RealTimeProject_Batch21.Controllers
 {
+    [Authorize(RBAC.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
