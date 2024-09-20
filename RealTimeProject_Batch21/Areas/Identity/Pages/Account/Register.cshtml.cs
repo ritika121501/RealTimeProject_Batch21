@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
@@ -108,6 +109,14 @@ namespace RealTimeProject_Batch21.Areas.Identity.Pages.Account
 
             public string? Role { get; set; }
             public IEnumerable<SelectListItem> RoleList { get; set; }
+
+            public string Name { get; set; }
+
+            public string? StreetAddress { get; set; }
+            public string? City { get; set; }
+            public string? State { get; set; }
+            public string? PostalCode { get; set; }
+            public string? PhoneNumber { get; set; }
         }
 
 
@@ -140,10 +149,12 @@ namespace RealTimeProject_Batch21.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                user.State = "VA";
-                user.StreetAddress = "Testing Application User";
-                user.PostalCode = "AB567UI";
-
+                user.State = Input.State;
+                user.PhoneNumber = Input.PhoneNumber;
+                user.City = Input.City;
+                user.StreetAddress = Input.StreetAddress;
+                user.PostalCode = Input.PostalCode;
+                //er.Name = Input.Name;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
