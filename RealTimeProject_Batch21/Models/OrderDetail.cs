@@ -5,6 +5,8 @@ namespace RealTimeProject_Batch21.Models
 {
     public class OrderDetail
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderDetailId { get; set; }
         public string OrderHeaderId {  get; set; }
         [ForeignKey("OrderHeaderId")]

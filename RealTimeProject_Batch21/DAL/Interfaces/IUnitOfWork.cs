@@ -5,6 +5,8 @@
         ICategoryRepository CategoryRepository { get; }
         IProductRepository ProductRepository { get; }
         IProductImageRepository ProductImageRepository { get; }
+
+        ICartRepository CartRepository { get; }
         int Save();
     }
 }

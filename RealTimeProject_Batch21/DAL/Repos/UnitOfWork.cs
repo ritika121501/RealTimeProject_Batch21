@@ -8,6 +8,7 @@ namespace RealTimeProject_Batch21.DAL.Repos
         public ICategoryRepository CategoryRepository { get; }
         public IProductRepository ProductRepository { get; }
         public IProductImageRepository ProductImageRepository { get; }
+        public ICartRepository CartRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context, ICategoryRepository categoryRepository, IProductRepository productRepository, IProductImageRepository productImageRepository)
         {
@@ -15,6 +16,7 @@ namespace RealTimeProject_Batch21.DAL.Repos
             CategoryRepository = categoryRepository;
             ProductRepository = productRepository;
             ProductImageRepository = productImageRepository;
+            CartRepository = CartRepository;
         }
         public int Save()
         {

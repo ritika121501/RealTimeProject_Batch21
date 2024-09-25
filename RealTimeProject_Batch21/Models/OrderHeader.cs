@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealTimeProject_Batch21.Models
 {
     public class OrderHeader
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderHeaderId { get; set; }
 
         public string ApplicationUserId {  get; set; }

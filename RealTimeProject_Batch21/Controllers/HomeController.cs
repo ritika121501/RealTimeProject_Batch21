@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealTimeProject_Batch21.DTO;
 using RealTimeProject_Batch21.Models;
@@ -19,6 +20,7 @@ namespace RealTimeProject_Batch21.Controllers
 
         public IActionResult Index()
         {
+            _logger.Log(LogLevel.None, "abc");
             IEnumerable<ProductViewModel> productList = _productService.GetAllProduct().ToList();
             return View(productList);
         }

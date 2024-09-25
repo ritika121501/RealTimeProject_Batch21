@@ -5,6 +5,7 @@ using RealTimeProject_Batch21.DAL.Repos;
 using RealTimeProject_Batch21.Services;
 using RealTimeProject_Batch21.Services.ServiceImplementation;
 using Microsoft.AspNetCore.Identity;
+using RealTimeProject_Batch21.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +37,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseMiddleware<ExceptionHandlingMiddeware>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -44,7 +45,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.MapRazorPages();
-//app.UseExceptionHandler(); -- this is a middleware that will help in handling
+//app.UseExceptionHandler(); 
 //exception that has been raised anywhere in the application
 
 //app.UseExceptionHandler();
