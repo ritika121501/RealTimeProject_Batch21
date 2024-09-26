@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
+using Microsoft.VisualStudio.Web.CodeGeneration.Design;
 using RealTimeProject_Batch21.DTO;
+using RealTimeProject_Batch21.LogFolder;
 using RealTimeProject_Batch21.Models;
 using RealTimeProject_Batch21.Services;
 using System.Diagnostics;
@@ -20,7 +23,8 @@ namespace RealTimeProject_Batch21.Controllers
 
         public IActionResult Index()
         {
-            _logger.Log(LogLevel.None, "abc");
+            _logger.LogInformation("Requesting Weather Forecast Details...");
+            LogEvents.LogToFile("Testing Log", nameof(Method), GetType().Name, "I am testing logging");
             IEnumerable<ProductViewModel> productList = _productService.GetAllProduct().ToList();
             return View(productList);
         }
